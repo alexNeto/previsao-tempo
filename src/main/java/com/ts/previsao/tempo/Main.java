@@ -1,13 +1,15 @@
 package com.ts.previsao.tempo;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
+
+import com.ts.previsao.tempo.home.HomeController;
 
 public class Main {
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
-        get("/", (req, res) -> "digite /hello para ir para o hello");
-        get("/hello", (req, res) -> "Hello World");
-    }
+		new HomeController().homeRouter();
+		get("/hello", (req, res) -> "Hello World");
+	}
 
 }
