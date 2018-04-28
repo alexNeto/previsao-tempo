@@ -1,7 +1,5 @@
 package com.ts.previsao.tempo.previsao;
 
-import com.ts.previsao.tempo.cidade.Cidade;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;

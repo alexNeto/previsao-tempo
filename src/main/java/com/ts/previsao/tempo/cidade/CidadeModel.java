@@ -1,19 +1,17 @@
 package com.ts.previsao.tempo.cidade;
 
-import com.ts.previsao.tempo.utils.Acoes;
-import com.ts.previsao.tempo.utils.UrlBuilder;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
+
+import com.ts.previsao.tempo.utils.Acoes;
+import com.ts.previsao.tempo.utils.UrlBuilder;
 
 public class CidadeModel {
 

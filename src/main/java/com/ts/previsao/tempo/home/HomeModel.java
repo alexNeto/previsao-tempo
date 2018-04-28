@@ -2,7 +2,6 @@ package com.ts.previsao.tempo.home;
 
 import com.ts.previsao.tempo.previsao.Previsao;
 import com.ts.previsao.tempo.previsao.PrevisaoModel;
-import com.ts.previsao.tempo.previsao.Previsoes;
 
 public class HomeModel {
 
