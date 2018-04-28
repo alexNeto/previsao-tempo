@@ -5,5 +5,3 @@ jdk:
   - oraclejdk8
   - openjdk8
   
-script:
-- ./gradlew assemble
