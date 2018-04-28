@@ -24,11 +24,8 @@ public class CidadeModel {
     }
 
     public String getXMLCidade(String cidade) throws Exception {
-        String charset = StandardCharsets.ISO_8859_1.name();
         String linha, resultado = "";
         String urlListaCidade = this.urlBuilder.make(Acoes.PROCURAR_CIDADE, cidade);
-        /* codifica os parâmetros */
-//        String parametro = String.format(urlListaCidade, URLEncoder.encode(cidade, charset));
         URL url = new URL(urlListaCidade);
         URLConnection conexao = url.openConnection();
         BufferedReader reader = new BufferedReader(new InputStreamReader(conexao.getInputStream(), Charset.forName("ISO-8859-1")));
@@ -40,7 +37,6 @@ public class CidadeModel {
 
     public Cidade[] xmlToObjectCidade(String xml) throws Exception {
         StringReader sr = new StringReader(xml);
-        /* a base do XML é uma marcação de nome cidades */
         JAXBContext context = JAXBContext.newInstance(Cidades.class);
         Unmarshaller un = context.createUnmarshaller();
         Cidades cidades = (Cidades) un.unmarshal(sr);

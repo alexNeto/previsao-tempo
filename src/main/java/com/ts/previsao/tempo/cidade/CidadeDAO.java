@@ -11,7 +11,6 @@ import java.util.List;
 import com.ts.previsao.tempo.database.DataBaseConnectionFactory;
 
 public class CidadeDAO {
-
     private Connection connection;
 
     public CidadeDAO() throws ClassNotFoundException, SQLException {
@@ -65,6 +64,4 @@ public class CidadeDAO {
         this.connection.commit();
         return lista;
     }
-
-
 }

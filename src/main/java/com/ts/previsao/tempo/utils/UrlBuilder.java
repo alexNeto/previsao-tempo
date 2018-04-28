@@ -1,8 +1,6 @@
 package com.ts.previsao.tempo.utils;
 
 public class UrlBuilder {
-<<<<<<< HEAD
-
     private String url;
     private String dataType;
 
@@ -13,8 +11,8 @@ public class UrlBuilder {
 
     public String make(Acoes acao, String parametro) {
         StringBuilder urlBuilder = new StringBuilder();
-        urlBuilder.append(this.url);
-        urlBuilder.append(this.dataType);
+        urlBuilder.append(this.url).append("/");
+        urlBuilder.append(this.dataType).append("/");
         urlBuilder.append(defineParametros(acao));
         return urlBuilder.toString().replace("PARAMETRO", parametro);
     }
@@ -24,11 +22,9 @@ public class UrlBuilder {
         if (acao == Acoes.PROCURAR_CIDADE)
             acaoRealizada = "listaCidades?city=%PARAMETRO";
         else if (acao == Acoes.PREVISAO_7_DIAS)
-            acaoRealizada = "cidade/7dias/PARAMETRO/previsao.xml" ;
+            acaoRealizada = "cidade/7dias/PARAMETRO/previsao.xml";
         else
             acaoRealizada = "";
         return acaoRealizada;
     }
-=======
->>>>>>> c3429390b812758d8f4e4bda6ded032fc6d74498
 }
