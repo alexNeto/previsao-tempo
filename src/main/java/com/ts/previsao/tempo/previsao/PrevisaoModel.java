@@ -1,5 +1,6 @@
 package com.ts.previsao.tempo.previsao;
 
+<<<<<<< HEAD
 import com.ts.previsao.tempo.cidade.Cidade;
 import com.ts.previsao.tempo.cidade.Cidades;
 import com.ts.previsao.tempo.utils.Acoes;
@@ -50,4 +51,7 @@ public class PrevisaoModel {
     public String removeMetaData(String xml) {
         return xml.replace("<?xml version='1.0' encoding='ISO-8859-1'?>", "");
     }
+=======
+public class PrevisaoModel {
+>>>>>>> c3429390b812758d8f4e4bda6ded032fc6d74498
 }

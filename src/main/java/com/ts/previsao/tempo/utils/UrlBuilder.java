@@ -1,6 +1,7 @@
 package com.ts.previsao.tempo.utils;
 
 public class UrlBuilder {
+<<<<<<< HEAD
 
     private String url;
     private String dataType;
@@ -28,4 +29,6 @@ public class UrlBuilder {
             acaoRealizada = "";
         return acaoRealizada;
     }
+=======
+>>>>>>> c3429390b812758d8f4e4bda6ded032fc6d74498
 }
