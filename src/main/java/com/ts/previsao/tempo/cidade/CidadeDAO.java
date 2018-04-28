@@ -12,59 +12,59 @@ import com.ts.previsao.tempo.database.DataBaseConnectionFactory;
 
 public class CidadeDAO {
 
-	private Connection connection;
+    private Connection connection;
 
-	public CidadeDAO() throws ClassNotFoundException, SQLException {
-		this.connection = new DataBaseConnectionFactory().conectar();
-	}
+    public CidadeDAO() throws ClassNotFoundException, SQLException {
+        this.connection = new DataBaseConnectionFactory().conectar();
+    }
 
-	public boolean createTablePrevisao() throws SQLException {
-		Statement stmt = this.connection.createStatement();
-		StringBuilder sqlBuilder = new StringBuilder();
-		sqlBuilder.append("create table if not exists").append("tbcidade");
-		sqlBuilder.append("(");
-		sqlBuilder.append("id int not null").append(",");
-		sqlBuilder.append("nome varchar(255) not null").append(",");
-		sqlBuilder.append("uf char(2) not null").append(",");
-		sqlBuilder.append("atualizacao date not null").append(",");
-		sqlBuilder.append("primary key (id)");
-		sqlBuilder.append(")");
-		stmt.executeUpdate(sqlBuilder.toString());
-		stmt.close();
-		return true;
-	}
+    public boolean createTablePrevisao() throws SQLException {
+        Statement stmt = this.connection.createStatement();
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("create table if not exists").append("tbcidade");
+        sqlBuilder.append("(");
+        sqlBuilder.append("id int not null").append(",");
+        sqlBuilder.append("nome varchar(255) not null").append(",");
+        sqlBuilder.append("uf char(2) not null").append(",");
+        sqlBuilder.append("atualizacao date not null").append(",");
+        sqlBuilder.append("primary key (id)");
+        sqlBuilder.append(")");
+        stmt.executeUpdate(sqlBuilder.toString());
+        stmt.close();
+        return true;
+    }
 
-	public boolean insertCidade(CidadeRepository cidade) throws SQLException {
-		/* o campo atualizacao irá receber o valor padrão, ou seja, null */
-		String sql = "insert or ignore into tbcidade(id,nome,uf) values(?,?,?)";
-		PreparedStatement stmt = this.connection.prepareStatement(sql);
-		stmt.setInt(1, cidade.getId());
-		stmt.setString(2, cidade.getNome());
-		stmt.setString(3, cidade.getUf());
-		stmt.execute();
-		stmt.close();
-		this.connection.commit();
-		return true;
-	}
+    public boolean insertCidade(CidadeRepository cidade) throws SQLException {
+        /* o campo atualizacao irá receber o valor padrão, ou seja, null */
+        String sql = "insert or ignore into tbcidade(id,nome,uf) values(?,?,?)";
+        PreparedStatement stmt = this.connection.prepareStatement(sql);
+        stmt.setInt(1, cidade.getId());
+        stmt.setString(2, cidade.getNome());
+        stmt.setString(3, cidade.getUf());
+        stmt.execute();
+        stmt.close();
+        this.connection.commit();
+        return true;
+    }
 
-	public List<CidadeRepository> selectCidade(String sql) throws SQLException {
-		Statement stmt = this.connection.createStatement();
-		ResultSet rs = stmt.executeQuery(sql);
-		List<CidadeRepository> lista = new ArrayList<>();
-		CidadeRepository cidade;
-		while (rs.next()) {
-			cidade = new CidadeRepository();
-			cidade.setId(rs.getInt("id"));
-			cidade.setNome(rs.getString("nome"));
-			cidade.setUf(rs.getString("uf"));
-			cidade.setAtualizacao(rs.getString("atualizacao"));
-			lista.add(cidade);
-		}
-		rs.close();
-		stmt.close();
-		this.connection.commit();
-		return lista;
-	}
+    public List<CidadeRepository> selectCidade(String sql) throws SQLException {
+        Statement stmt = this.connection.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        List<CidadeRepository> lista = new ArrayList<>();
+        CidadeRepository cidade;
+        while (rs.next()) {
+            cidade = new CidadeRepository();
+            cidade.setId(rs.getInt("id"));
+            cidade.setNome(rs.getString("nome"));
+            cidade.setUf(rs.getString("uf"));
+            cidade.setAtualizacao(rs.getString("atualizacao"));
+            lista.add(cidade);
+        }
+        rs.close();
+        stmt.close();
+        this.connection.commit();
+        return lista;
+    }
 
 
 }

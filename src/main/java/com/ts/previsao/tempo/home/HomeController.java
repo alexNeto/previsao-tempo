@@ -5,8 +5,8 @@ import static spark.Spark.get;
 public class HomeController {
 
 	/**
-	 * Aqui deve ter o conteúdo inicial "home" da api
-	 * com como usar, link do github, e outras informações
+	 * Aqui deve ter o conteï¿½do inicial "home" da api
+	 * com como usar, link do github, e outras informaï¿½ï¿½es
 	 * @param req
 	 * @param res
 	 * @return
