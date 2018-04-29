@@ -12,8 +12,11 @@ public class Main {
 	public static void main(String[] args) {
 		port(getHerokuAssignedPort());
 
-		new PrevisaoDAO().createTablePrevisao();
-		new CidadeDAO().createTablePrevisao();
+		CidadeDAO cidade = new CidadeDAO();
+		cidade.createTableCidade();
+
+		PrevisaoDAO previsao = new PrevisaoDAO();
+		previsao.createTablePrevisao();
 
 		new HomeController().homeRouter();
 		new Previsao7DiasController().previsao7DiasRouter();

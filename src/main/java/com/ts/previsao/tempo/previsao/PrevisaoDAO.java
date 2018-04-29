@@ -13,12 +13,14 @@ import com.ts.previsao.tempo.DataBaseConnection;
 
 public class PrevisaoDAO extends DataBaseConnection {
 
+	private static PrevisaoDAO instance;
+
 	public boolean createTablePrevisao() {
 		StringBuilder sqlBuilder = new StringBuilder();
 		sqlBuilder.append("create table if not exists ").append("tbprevisao");
 		sqlBuilder.append("(");
 		sqlBuilder.append("id int not null").append(",");
-		sqlBuilder.append("dia date not null").append(",");
+		sqlBuilder.append("dia varchar(10) not null").append(",");
 		sqlBuilder.append("tempo char(3) not null").append(",");
 		sqlBuilder.append("minima float not null").append(",");
 		sqlBuilder.append("maxima float not null").append(",");
@@ -71,5 +73,12 @@ public class PrevisaoDAO extends DataBaseConnection {
 			return null;
 		}
 		return previsoes;
+	}
+
+	public static PrevisaoDAO getPrevisaoDAO() {
+		if (instance == null) {
+			instance = new PrevisaoDAO();
+		}
+		return instance;
 	}
 }

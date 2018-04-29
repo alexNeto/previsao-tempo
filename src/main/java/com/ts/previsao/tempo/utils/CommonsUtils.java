@@ -19,9 +19,9 @@ public class CommonsUtils {
 	}
 
 	public static String removeAcentos(String string) {
-		string = Normalizer.normalize(string, Normalizer.Form.NFD);
-		string = DIACRITICS.matcher(string).replaceAll("");
-		return string;
+		String semAcentos = Normalizer.normalize(string, Normalizer.Form.NFD);
+		semAcentos = DIACRITICS.matcher(semAcentos).replaceAll("");
+		return semAcentos;
 	}
 
 	public static String convertSeparadorData(String data) {

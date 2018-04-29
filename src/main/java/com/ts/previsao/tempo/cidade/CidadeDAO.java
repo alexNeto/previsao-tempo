@@ -13,14 +13,16 @@ import com.ts.previsao.tempo.DataBaseConnection;
 
 public class CidadeDAO extends DataBaseConnection {
 
-	public boolean createTablePrevisao() {
+	private static CidadeDAO instance;
+
+	public boolean createTableCidade() {
 		StringBuilder sqlBuilder = new StringBuilder();
 		sqlBuilder.append("create table if not exists ").append("tbcidade");
 		sqlBuilder.append("(");
 		sqlBuilder.append("id int not null").append(",");
 		sqlBuilder.append("nome varchar(255) not null").append(",");
 		sqlBuilder.append("uf char(2) not null").append(",");
-		sqlBuilder.append("atualizacao date not null").append(",");
+		sqlBuilder.append("atualizacao varchar(10) not null").append(",");
 		sqlBuilder.append("primary key (id)");
 		sqlBuilder.append(")");
 		try (Connection conn = DriverManager.getConnection(URL); Statement stmt = conn.createStatement()) {
@@ -32,11 +34,12 @@ public class CidadeDAO extends DataBaseConnection {
 	}
 
 	public boolean insertCidade(CidadeRepository cidade) throws SQLException {
-		String sql = "insert or ignore into tbcidade(id,nome,uf) values(?,?,?)";
+		String sql = "insert or ignore into tbcidade(id, nome, uf, atualizacao) values(?, ?, ?, ?)";
 		try (Connection conn = this.conecta(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setInt(1, cidade.getId());
 			stmt.setString(2, cidade.getNome());
 			stmt.setString(3, cidade.getUf());
+			stmt.setString(4, cidade.getAtualizacao());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			return false;
@@ -103,4 +106,10 @@ public class CidadeDAO extends DataBaseConnection {
 		return true;
 	}
 
+	public static CidadeDAO getCidadeDao() {
+		if (instance == null) {
+			instance = new CidadeDAO();
+		}
+		return instance;
+	}
 }
