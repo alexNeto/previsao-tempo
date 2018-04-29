@@ -15,33 +15,38 @@ import com.ts.previsao.tempo.utils.UrlBuilder;
 
 public class CidadeModel {
 
-    private UrlBuilder urlBuilder;
+	private UrlBuilder urlBuilder;
 
-    public CidadeModel() {
-        this.urlBuilder = new UrlBuilder();
-    }
+	public CidadeModel() {
+		this.urlBuilder = new UrlBuilder();
+	}
 
-    public String getXMLCidade(String cidade) throws Exception {
-        String linha, resultado = "";
-        String urlListaCidade = this.urlBuilder.make(Acoes.PROCURAR_CIDADE, cidade);
-        URL url = new URL(urlListaCidade);
-        URLConnection conexao = url.openConnection();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(conexao.getInputStream(), Charset.forName("ISO-8859-1")));
-        while ((linha = reader.readLine()) != null) {
-            resultado += linha;
-        }
-        return this.removeMetaData(resultado);
-    }
+	public String getXMLCidade(String cidade) throws Exception {
+		String linha, resultado = "";
+		String urlListaCidade = this.urlBuilder.make(Acoes.PROCURAR_CIDADE, cidade);
+		URL url = new URL(urlListaCidade);
+		URLConnection conexao = url.openConnection();
+		BufferedReader reader = new BufferedReader(
+				new InputStreamReader(conexao.getInputStream(), Charset.forName("ISO-8859-1")));
+		while ((linha = reader.readLine()) != null) {
+			resultado += linha;
+		}
+		return this.removeMetaData(resultado);
+	}
 
-    public Cidade[] xmlToObjectCidade(String xml) throws Exception {
-        StringReader sr = new StringReader(xml);
-        JAXBContext context = JAXBContext.newInstance(Cidades.class);
-        Unmarshaller un = context.createUnmarshaller();
-        Cidades cidades = (Cidades) un.unmarshal(sr);
-        return cidades.getCidade();
-    }
+	public Cidade[] xmlToObjectCidade(String xml) throws Exception {
+		StringReader sr = new StringReader(xml);
+		JAXBContext context = JAXBContext.newInstance(Cidades.class);
+		Unmarshaller un = context.createUnmarshaller();
+		Cidades cidades = (Cidades) un.unmarshal(sr);
+		return cidades.getCidade();
+	}
 
-    public String removeMetaData(String xml) {
-        return xml.replace("<?xml version='1.0' encoding='ISO-8859-1'?>", "");
-    }
+	public String removeMetaData(String xml) {
+		return xml.replace("<?xml version='1.0' encoding='ISO-8859-1'?>", "");
+	}
+
+//	public Cidade selecionaCidade(String uf, String cidade) {
+//
+//	}
 }

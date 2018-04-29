@@ -12,7 +12,7 @@ api para informações sobre o clima nos próximos 7 dias
 ## Requisitos do Sistema
 
 
-- [ ] O banco de dados deverá ser implementado no SQLite;
+- [x] O banco de dados deverá ser implementado no SQLite;
 - [ ] O sistema deverá manter os dados das cidades já consultadas na tbcidade para evitar ter de buscar no serviço do
 CPTEC o código da cidade a cada nova consulta da mesma cidade;
 - [ ] O sistema deverá manter os dados de previsão já consultados na tbprevisao e a data de atualização no campo. 
