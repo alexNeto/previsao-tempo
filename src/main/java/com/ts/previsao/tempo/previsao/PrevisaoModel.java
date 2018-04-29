@@ -43,5 +43,4 @@ public class PrevisaoModel {
 		Previsoes previsoes = (Previsoes) un.unmarshal(sr);
 		return previsoes.getPrevisao();
 	}
-
 }

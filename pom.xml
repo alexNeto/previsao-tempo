@@ -13,7 +13,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
 		<project.build.directory>/target</project.build.directory>
-		<project.reporting.outputDirectory>/target</project.reporting.outputDirectory>
+		<project.reporting.outputDirectory>/</project.reporting.outputDirectory>
 	</properties>
 	<build>
 		<plugins>
@@ -133,6 +133,13 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>1.9.5</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Hamcrest -->
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<version>1.3</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
