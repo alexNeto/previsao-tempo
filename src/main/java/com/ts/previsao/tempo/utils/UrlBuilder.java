@@ -14,13 +14,13 @@ public class UrlBuilder {
         urlBuilder.append(this.url).append("/");
         urlBuilder.append(this.dataType).append("/");
         urlBuilder.append(defineParametros(acao));
-        return urlBuilder.toString().replace("PARAMETRO", parametro);
+        return urlBuilder.toString().replace("PARAMETRO", parametro).replace(" ", "%20");
     }
 
     public String defineParametros(Acoes acao) {
         String acaoRealizada;
         if (acao == Acoes.PROCURAR_CIDADE)
-            acaoRealizada = "listaCidades?city=%PARAMETRO";
+            acaoRealizada = "listaCidades?city=PARAMETRO";
         else if (acao == Acoes.PREVISAO_7_DIAS)
             acaoRealizada = "cidade/7dias/PARAMETRO/previsao.xml";
         else

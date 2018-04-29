@@ -24,7 +24,8 @@ public class PrevisaoModel {
 	}
 
 	public String getXMLPrevisao(Integer codigoCidade) throws Exception {
-		String linha, resultado = "";
+		String linha;
+		String resultado = "";
 		String urlListaCidade = this.urlBuilder.make(Acoes.PREVISAO_7_DIAS, codigoCidade.toString());
 		URL url = new URL(urlListaCidade);
 		URLConnection conexao = url.openConnection();
