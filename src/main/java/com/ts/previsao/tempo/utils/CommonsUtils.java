@@ -1,6 +1,9 @@
 package com.ts.previsao.tempo.utils;
 
+import java.text.DateFormat;
 import java.text.Normalizer;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.regex.Pattern;
 
 public class CommonsUtils {
@@ -26,5 +29,11 @@ public class CommonsUtils {
 
 	public static String convertSeparadorData(String data) {
 		return data.replace("-", "/");
+	}
+
+	public static String formataDataAtual() {
+		final DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		final Calendar cal = Calendar.getInstance();
+		return df.format(cal.getTime());
 	}
 }

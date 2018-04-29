@@ -8,11 +8,13 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
 import com.ts.previsao.tempo.utils.Acoes;
+import com.ts.previsao.tempo.utils.CommonsUtils;
 import com.ts.previsao.tempo.utils.UrlBuilder;
 
 public class CidadeModel {
@@ -53,5 +55,43 @@ public class CidadeModel {
 			}
 		}
 		return cidadeEncontrada;
+	}
+
+	public CidadeRepository filtraCidade(String uf, String cidade) throws Exception {
+		String nome = CommonsUtils.padronizaNomeDeCidade(cidade);
+		CidadeRepository cidadeRepository = getCidadeSalva(uf, nome);
+		if (cidadeRepository == null) {
+			CidadeDAO cidadeDao = new CidadeDAO();
+			cidadeRepository = converteParaCidadeRepository(buscaCidade(uf, nome));
+			cidadeDao.insertCidade(cidadeRepository);
+		}
+		return cidadeRepository;
+	}
+
+	public CidadeRepository getCidadeSalva(String uf, String nome) throws Exception {
+		CidadeDAO cidadeDao = new CidadeDAO();
+		CidadeRepository cidadeEncontrada = null;
+		List<CidadeRepository> cidades = cidadeDao.selectAllCidade();
+		for (CidadeRepository cidade : cidades) {
+			if (cidade.getUf().equals(uf) && cidade.getNome().equals(nome)) {
+				cidadeEncontrada = cidade;
+			}
+		}
+		return cidadeEncontrada;
+	}
+
+	public Cidade buscaCidade(String uf, String nome) throws Exception {
+		CidadeModel cidadeModel = new CidadeModel();
+		Cidade[] cidades = cidadeModel.xmlToObjectCidade(cidadeModel.getXMLCidade(nome));
+		return cidadeModel.selecionaCidade(cidades, uf, nome);
+	}
+
+	public CidadeRepository converteParaCidadeRepository(Cidade cidade) {
+		CidadeRepository cidadeRepository = new CidadeRepository();
+		cidadeRepository.setId(cidade.getId());
+		cidadeRepository.setNome(cidade.getNome());
+		cidadeRepository.setUf(cidade.getUf());
+		cidadeRepository.setAtualizacao(CommonsUtils.formataDataAtual());
+		return cidadeRepository;
 	}
 }
