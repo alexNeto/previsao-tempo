@@ -16,7 +16,7 @@ public class UrlBuilderTest {
 
 	@Test
 	public void testa_acao_de_procura_cidade() {
-		String esperado = "listaCidades?city=%PARAMETRO";
+		String esperado = "listaCidades?city=PARAMETRO";
 		assertEquals(esperado, this.urlBuilder.defineParametros(Acoes.PROCURAR_CIDADE));
 	}
 
