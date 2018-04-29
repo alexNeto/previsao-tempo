@@ -27,4 +27,8 @@ public class CommonsUtilsTest {
 		assertEquals("sao jose dos campos", CommonsUtils.padronizaNomeDeCidade("São-José-dos-Campos"));
 	}
 	
+	@Test
+	public void testa_se_converte_separador_de_data() {
+		assertEquals("dd/mm/aaaa", CommonsUtils.convertSeparadorData("dd-mm-aaaa"));
+	}
 }

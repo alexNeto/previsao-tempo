@@ -2,13 +2,19 @@ package com.ts.previsao.tempo;
 
 import static spark.Spark.port;
 
+import com.ts.previsao.tempo.cidade.CidadeDAO;
 import com.ts.previsao.tempo.home.HomeController;
+import com.ts.previsao.tempo.previsao.PrevisaoDAO;
 import com.ts.previsao.tempo.previsao7dias.Previsao7DiasController;
 
 public class Main {
 
 	public static void main(String[] args) {
 		port(getHerokuAssignedPort());
+
+		new PrevisaoDAO().createTablePrevisao();
+		new CidadeDAO().createTablePrevisao();
+
 		new HomeController().homeRouter();
 		new Previsao7DiasController().previsao7DiasRouter();
 	}
@@ -20,4 +26,5 @@ public class Main {
 		}
 		return 4567;
 	}
+
 }

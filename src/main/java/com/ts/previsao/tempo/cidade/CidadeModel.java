@@ -33,21 +33,6 @@ public class CidadeModel {
 		return removeXMLMetaData(partialResponse);
 	}
 
-	// public String getXMLCidade(String cidade) throws Exception {
-	// String linha;
-	// String resultado = "";
-	// String urlListaCidade = this.urlBuilder.make(Acoes.PROCURAR_CIDADE, cidade);
-	// URL url = new URL(urlListaCidade);
-	// URLConnection conexao = url.openConnection();
-	// BufferedReader reader = new BufferedReader(
-	// new InputStreamReader(conexao.getInputStream(),
-	// Charset.forName("ISO-8859-1")));
-	// while ((linha = reader.readLine()) != null) {
-	// resultado += linha;
-	// }
-	// return removeXMLMetaData(resultado);
-	// }
-
 	public Cidade[] xmlToObjectCidade(String xml) throws Exception {
 		StringReader sr = new StringReader(xml);
 		JAXBContext context = JAXBContext.newInstance(Cidades.class);
@@ -59,7 +44,7 @@ public class CidadeModel {
 	public Cidade selecionaCidade(Cidade[] cidades, String uf, String nomeCidade) {
 		Cidade cidadeEncontrada = null;
 		for (Cidade cidade : cidades) {
-			if (uf.toLowerCase().equals(cidade.getUf().toLowerCase())) {
+			if (uf.equalsIgnoreCase(cidade.getUf().toLowerCase())) {
 				String nomeDaCidade = cidade.getNome();
 				nomeDaCidade = padronizaNomeDeCidade(nomeDaCidade);
 				if (nomeDaCidade.contains(nomeCidade)) {

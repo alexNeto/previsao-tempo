@@ -1,6 +1,7 @@
 package com.ts.previsao.tempo.cidade;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,19 +9,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ts.previsao.tempo.database.DataBaseConnectionFactory;
+import com.ts.previsao.tempo.DataBaseConnection;
 
-public class CidadeDAO {
-	private Connection connection;
+public class CidadeDAO extends DataBaseConnection {
 
-	public CidadeDAO() throws ClassNotFoundException, SQLException {
-		this.connection = new DataBaseConnectionFactory().conectar();
-	}
-
-	public boolean createTablePrevisao() throws SQLException {
-		Statement stmt = this.connection.createStatement();
+	public boolean createTablePrevisao() {
 		StringBuilder sqlBuilder = new StringBuilder();
-		sqlBuilder.append("create table if not exists").append("tbcidade");
+		sqlBuilder.append("create table if not exists ").append("tbcidade");
 		sqlBuilder.append("(");
 		sqlBuilder.append("id int not null").append(",");
 		sqlBuilder.append("nome varchar(255) not null").append(",");
@@ -28,61 +23,84 @@ public class CidadeDAO {
 		sqlBuilder.append("atualizacao date not null").append(",");
 		sqlBuilder.append("primary key (id)");
 		sqlBuilder.append(")");
-		stmt.executeUpdate(sqlBuilder.toString());
-		stmt.close();
+		try (Connection conn = DriverManager.getConnection(URL); Statement stmt = conn.createStatement()) {
+			stmt.execute(sqlBuilder.toString());
+		} catch (SQLException e) {
+			return false;
+		}
 		return true;
 	}
 
 	public boolean insertCidade(CidadeRepository cidade) throws SQLException {
-		/* o campo atualizacao irá receber o valor padrão, ou seja, null */
 		String sql = "insert or ignore into tbcidade(id,nome,uf) values(?,?,?)";
-		PreparedStatement stmt = this.connection.prepareStatement(sql);
-		stmt.setInt(1, cidade.getId());
-		stmt.setString(2, cidade.getNome());
-		stmt.setString(3, cidade.getUf());
-		stmt.execute();
-		stmt.close();
-		this.connection.commit();
+		try (Connection conn = this.conecta(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setInt(1, cidade.getId());
+			stmt.setString(2, cidade.getNome());
+			stmt.setString(3, cidade.getUf());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			return false;
+		}
 		return true;
 	}
 
 	public List<CidadeRepository> selectAllCidade() throws SQLException {
-		StringBuilder sqlBuilder = new StringBuilder();
-		sqlBuilder.append("select * from tbcidade");
-		Statement stmt = this.connection.createStatement();
-		ResultSet rs = stmt.executeQuery(sqlBuilder.toString());
-		List<CidadeRepository> lista = new ArrayList<>();
-		CidadeRepository cidade;
-		while (rs.next()) {
-			cidade = new CidadeRepository();
-			cidade.setId(rs.getInt("id"));
-			cidade.setNome(rs.getString("nome"));
-			cidade.setUf(rs.getString("uf"));
-			cidade.setAtualizacao(rs.getString("atualizacao"));
-			lista.add(cidade);
+		String sql = "select * from tbcidade";
+		List<CidadeRepository> cidades = new ArrayList<>();
+		try (Connection conn = this.conecta();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql)) {
+			CidadeRepository cidade;
+			while (rs.next()) {
+				cidade = new CidadeRepository();
+				cidade.setId(rs.getInt("id"));
+				cidade.setNome(rs.getString("nome"));
+				cidade.setUf(rs.getString("uf"));
+				cidade.setAtualizacao(rs.getString("atualizacao"));
+				cidades.add(cidade);
+			}
+		} catch (SQLException e) {
+			return null;
 		}
-		rs.close();
-		stmt.close();
-		this.connection.commit();
-		return lista;
+		return cidades;
 	}
 
 	public CidadeRepository selectById(Integer id) throws SQLException {
-		StringBuilder sqlBuilder = new StringBuilder();
-		sqlBuilder.append("select * from tbcidade where id=?");
-		PreparedStatement stmt = this.connection.prepareStatement(sqlBuilder.toString());
-		stmt.setInt(1, id);
-		ResultSet rs = stmt.executeQuery();
-		CidadeRepository cidade = new CidadeRepository();
-		while (rs.next()) {
-			cidade.setId(rs.getInt("id"));
-			cidade.setNome(rs.getString("nome"));
-			cidade.setUf(rs.getString("uf"));
-			cidade.setAtualizacao(rs.getString("atualizacao"));
+		String sql = "select * from tbcidade where id=?";
+		CidadeRepository cidade = null;
+		try (Connection conn = this.conecta();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql)) {
+			while (rs.next()) {
+				cidade = new CidadeRepository();
+				cidade.setId(rs.getInt("id"));
+				cidade.setNome(rs.getString("nome"));
+				cidade.setUf(rs.getString("uf"));
+				cidade.setAtualizacao(rs.getString("atualizacao"));
+			}
+		} catch (SQLException e) {
+			return null;
 		}
-		rs.close();
-		stmt.close();
-		this.connection.commit();
 		return cidade;
 	}
+
+	public boolean atualizaCidade(CidadeRepository cidade) throws SQLException {
+		StringBuilder sqlBuilder = new StringBuilder();
+		sqlBuilder.append("UPDATE ").append("tbcidade ").append("set ");
+		sqlBuilder.append("nome = ?").append(",");
+		sqlBuilder.append("uf = ?").append(",");
+		sqlBuilder.append("atualizacao = ? ");
+		sqlBuilder.append("where id = ?");
+		try (Connection conn = this.conecta(); PreparedStatement stmt = conn.prepareStatement(sqlBuilder.toString())) {
+			stmt.setString(1, cidade.getNome());
+			stmt.setString(2, cidade.getUf());
+			stmt.setString(3, cidade.getAtualizacao());
+			stmt.setInt(4, cidade.getId());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			return false;
+		}
+		return true;
+	}
+
 }

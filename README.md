@@ -29,7 +29,7 @@ dias - formada por:
 	* temperatura máxima
 - [x] No caso do nome fornecido pelo usuário resultar em vários nomes, por exemplo, São José, o sistema deverá exibir somente o 1o resultado da
 consulta.
-- [ ] A 1a vez que o programa for executado o BD e suas tabelas deverão ser criadas.
+- [x] A 1a vez que o programa for executado o BD e suas tabelas deverão ser criadas.
 
 
 ## Como usar

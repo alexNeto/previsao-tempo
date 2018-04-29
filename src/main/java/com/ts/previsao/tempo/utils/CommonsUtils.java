@@ -24,4 +24,7 @@ public class CommonsUtils {
 		return string;
 	}
 
+	public static String convertSeparadorData(String data) {
+		return data.replace("-", "/");
+	}
 }

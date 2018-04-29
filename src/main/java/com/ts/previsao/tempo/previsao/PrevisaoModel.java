@@ -37,11 +37,11 @@ public class PrevisaoModel {
 		return removeXMLMetaData(resultado);
 	}
 
-	public Previsao[] xmlToObjectPrevisao(String xml) throws Exception {
+	public Previsoes xmlToObjectPrevisao(String xml) throws Exception {
 		StringReader sr = new StringReader(xml);
 		JAXBContext context = JAXBContext.newInstance(Previsoes.class);
 		Unmarshaller un = context.createUnmarshaller();
 		Previsoes previsoes = (Previsoes) un.unmarshal(sr);
-		return previsoes.getPrevisao();
+		return previsoes;
 	}
 }
