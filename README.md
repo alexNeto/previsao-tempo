@@ -19,7 +19,7 @@ CPTEC o código da cidade a cada nova consulta da mesma cidade;
 atualizacao. Se no momento da consulta a data de atualização da previsão for diferente de hoje, todos os
 dados de previsão da cidade deverão ser removidos da tbprevisao e novos dados deverão ser buscados no serviço
 do CPTEC;
-- [ ] O sistema deverá ter uma interface gráfica ou por linha de comando para o usuário fornecer o nome de uma cidade
+- [x] O sistema deverá ter uma interface gráfica ou por linha de comando para o usuário fornecer o nome de uma cidade
 ou parte do nome. Na sequência o sistema deverá exibir como resultado a previsão do tempo para os próximos 7
 dias - formada por:
 	* data (dd/mm/aaaa);
@@ -27,15 +27,15 @@ dias - formada por:
 	* IUV;
 	* temperatura mínima;
 	* temperatura máxima
-- [ ] No caso do nome fornecido pelo usuário resultar em vários nomes, por exemplo, São José, o sistema deverá exibir somente o 1o resultado da
+- [x] No caso do nome fornecido pelo usuário resultar em vários nomes, por exemplo, São José, o sistema deverá exibir somente o 1o resultado da
 consulta.
 - [ ] A 1a vez que o programa for executado o BD e suas tabelas deverão ser criadas.
 
 
 ## Como usar
 
-Rode o projeto localmente, 
 
 acesse `http://localhost:4567/uf/<sigla do estado>/cidade/<nome da cidade>`
+ou `https://previsao-tempo.herokuapp.com/uf/sp/cidade/sao-jose-dos-campos` para testar online
 * **estado:** sigla do estado, com caixa alta ou baixa, por exemplo: SP, rj, mg...
 * **cidade:** nome da cidade com hifen para espaços e sem acentos ou caracteres especiais como til e cedilhas. Por exemplo para procurar pela cidade de **São José dos Campos** use **sao-jose-dos-campos**.
