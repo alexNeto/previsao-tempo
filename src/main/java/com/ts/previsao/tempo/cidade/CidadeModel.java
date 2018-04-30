@@ -46,9 +46,8 @@ public class CidadeModel {
 	public Cidade selecionaCidade(Cidade[] cidades, String uf, String nomeCidade) {
 		Cidade cidadeEncontrada = null;
 		for (Cidade cidade : cidades) {
-			if (uf.equalsIgnoreCase(cidade.getUf().toLowerCase())) {
-				String nomeDaCidade = cidade.getNome();
-				nomeDaCidade = padronizaNomeDeCidade(nomeDaCidade);
+			if (uf.equalsIgnoreCase(cidade.getUf())) {
+				String nomeDaCidade = padronizaNomeDeCidade(cidade.getNome());
 				if (nomeDaCidade.contains(nomeCidade)) {
 					cidadeEncontrada = cidade;
 				}
@@ -58,7 +57,7 @@ public class CidadeModel {
 	}
 
 	public CidadeRepository filtraCidade(String uf, String cidade) throws Exception {
-		String nome = CommonsUtils.padronizaNomeDeCidade(cidade);
+		String nome = padronizaNomeDeCidade(cidade);
 		CidadeRepository cidadeRepository = getCidadeSalva(uf, nome);
 		CidadeDAO cidadeDao = new CidadeDAO();
 		if (cidadeRepository == null) {
