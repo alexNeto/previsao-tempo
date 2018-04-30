@@ -52,12 +52,13 @@ public class PrevisaoDAO extends DataBaseConnection {
 		return true;
 	}
 
-	public List<PrevisaoRepository> selectAllPrevisao() {
-		String sql = "select * from tbprevisao";
+	public List<PrevisaoRepository> selectAllPrevisao(Integer id) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select * from tbprevisao where id=").append(id);
 		List<PrevisaoRepository> previsoes = new ArrayList<>();
 		try (Connection conn = this.conecta();
 				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(sql)) {
+				ResultSet rs = stmt.executeQuery(sql.toString())) {
 			PrevisaoRepository previsao;
 			while (rs.next()) {
 				previsao = new PrevisaoRepository();
@@ -73,6 +74,17 @@ public class PrevisaoDAO extends DataBaseConnection {
 			return null;
 		}
 		return previsoes;
+	}
+
+	public boolean removeAllPrevisao(Integer id) {
+		StringBuilder sqlBuilder = new StringBuilder();
+		sqlBuilder.append("delete from tbprevisao where id=").append(id);
+		try (Connection conn = this.conecta(); PreparedStatement stmt = conn.prepareStatement(sqlBuilder.toString())) {
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			return false;
+		}
+		return true;
 	}
 
 	public static PrevisaoDAO getPrevisaoDAO() {

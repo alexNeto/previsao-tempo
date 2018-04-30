@@ -68,25 +68,6 @@ public class CidadeDAO extends DataBaseConnection {
 		return cidades;
 	}
 
-	public CidadeRepository selectById(Integer id) throws SQLException {
-		String sql = "select * from tbcidade where id=?";
-		CidadeRepository cidade = null;
-		try (Connection conn = this.conecta();
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(sql)) {
-			while (rs.next()) {
-				cidade = new CidadeRepository();
-				cidade.setId(rs.getInt("id"));
-				cidade.setNome(rs.getString("nome"));
-				cidade.setUf(rs.getString("uf"));
-				cidade.setAtualizacao(rs.getString("atualizacao"));
-			}
-		} catch (SQLException e) {
-			return null;
-		}
-		return cidade;
-	}
-
 	public boolean atualizaCidade(CidadeRepository cidade) throws SQLException {
 		StringBuilder sqlBuilder = new StringBuilder();
 		sqlBuilder.append("UPDATE ").append("tbcidade ").append("set ");

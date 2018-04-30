@@ -8,11 +8,15 @@ import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
 import com.ts.previsao.tempo.utils.Acoes;
+import com.ts.previsao.tempo.utils.CommonsUtils;
 import com.ts.previsao.tempo.utils.UrlBuilder;
 
 public class PrevisaoModel {
@@ -37,11 +41,54 @@ public class PrevisaoModel {
 		return removeXMLMetaData(resultado);
 	}
 
-	public Previsoes xmlToObjectPrevisao(String xml) throws Exception {
+	public List<Previsao> xmlToObjectPrevisao(String xml) throws Exception {
 		StringReader sr = new StringReader(xml);
 		JAXBContext context = JAXBContext.newInstance(Previsoes.class);
 		Unmarshaller un = context.createUnmarshaller();
 		Previsoes previsoes = (Previsoes) un.unmarshal(sr);
-		return previsoes;
+		return Arrays.asList(previsoes.getPrevisao());
+	}
+
+	public List<Previsao> getPrevisao(Integer id) throws Exception {
+		PrevisaoModel previsaoModel = new PrevisaoModel();
+		return previsaoModel.xmlToObjectPrevisao(previsaoModel.getXMLPrevisao(id));
+	}
+
+	public List<PrevisaoRepository> filtraPrevisao(Integer id, String atualizacao) throws Exception {
+		PrevisaoDAO previsaoDao = new PrevisaoDAO();
+		List<PrevisaoRepository> previsaoRepositoryList = null;
+		if (CommonsUtils.formataDataAtual().equals(atualizacao)) {
+			previsaoRepositoryList = previsaoDao.selectAllPrevisao(id);
+			if(previsaoRepositoryList.isEmpty()) {
+				previsaoRepositoryList = atualizaPrevisoes(id);
+			}
+		} else {
+			previsaoDao.removeAllPrevisao(id);
+			previsaoRepositoryList = atualizaPrevisoes(id);
+		}
+		return previsaoRepositoryList;
+	}
+	
+	public List<PrevisaoRepository> atualizaPrevisoes(Integer id) throws Exception{
+		List<Previsao> previsoes = getPrevisao(id);
+		return inserePrevisoes(previsoes, id);	
+	}
+	
+
+	public List<PrevisaoRepository> inserePrevisoes(List<Previsao> previsoes, Integer id) {
+		PrevisaoRepository previsaoRepository = new PrevisaoRepository();
+		PrevisaoDAO previsaoDao = new PrevisaoDAO();
+		List<PrevisaoRepository> previsaoRepositoryList = new ArrayList<>();
+		for (Previsao previsao : previsoes) {
+			previsaoRepository.setId(id);
+			previsaoRepository.setDia(CommonsUtils.convertSeparadorData(previsao.getDia()));
+			previsaoRepository.setIuv(previsao.getIuv());
+			previsaoRepository.setMaxima(previsao.getMaxima());
+			previsaoRepository.setMinima(previsao.getMinima());
+			previsaoRepository.setTempo(previsao.getTempo());
+			previsaoRepositoryList.add(previsaoRepository);
+			previsaoDao.insertPrevisao(previsaoRepository);
+		}
+		return previsaoRepositoryList;
 	}
 }

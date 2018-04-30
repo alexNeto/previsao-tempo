@@ -60,10 +60,12 @@ public class CidadeModel {
 	public CidadeRepository filtraCidade(String uf, String cidade) throws Exception {
 		String nome = CommonsUtils.padronizaNomeDeCidade(cidade);
 		CidadeRepository cidadeRepository = getCidadeSalva(uf, nome);
+		CidadeDAO cidadeDao = new CidadeDAO();
 		if (cidadeRepository == null) {
-			CidadeDAO cidadeDao = new CidadeDAO();
 			cidadeRepository = converteParaCidadeRepository(buscaCidade(uf, nome));
 			cidadeDao.insertCidade(cidadeRepository);
+		} else {
+			cidadeDao.atualizaCidade(cidadeRepository);
 		}
 		return cidadeRepository;
 	}
