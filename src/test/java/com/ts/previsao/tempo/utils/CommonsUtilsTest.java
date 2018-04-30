@@ -11,24 +11,29 @@ public class CommonsUtilsTest {
 		String metadado = "<?xml version='1.0' encoding='ISO-8859-1'?>";
 		assertEquals("", CommonsUtils.removeXMLMetaData(metadado));
 	}
-	
+
 	@Test
 	public void testa_se_remove_acentos_de_strings() {
 		assertEquals("eeeaaaaooooiiicuuu", CommonsUtils.removeAcentos("éèêáâãàóòôõíìîçúùû"));
 	}
-	
+
 	@Test
 	public void testa_se_converte_nome_de_cidades() {
 		assertEquals("sao jose dos campos", CommonsUtils.padronizaNomeDeCidade("São José dos Campos"));
 	}
-	
+
 	@Test
 	public void testa_se_converte_nome_de_cidades_com_hifen() {
 		assertEquals("sao jose dos campos", CommonsUtils.padronizaNomeDeCidade("São-José-dos-Campos"));
 	}
-	
+
 	@Test
 	public void testa_se_converte_separador_de_data() {
 		assertEquals("dd/mm/aaaa", CommonsUtils.convertSeparadorData("dd-mm-aaaa"));
+	}
+
+	@Test
+	public void testa_se_converte_separador_de_data_com_data_invertida() {
+		assertEquals("dd/mm/aaaa", CommonsUtils.convertSeparadorData("aaaa-mm-dd"));
 	}
 }

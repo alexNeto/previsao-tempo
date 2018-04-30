@@ -28,7 +28,21 @@ public class CommonsUtils {
 	}
 
 	public static String convertSeparadorData(String data) {
-		return data.replace("-", "/");
+		String[] dataSplite = data.split("-");
+		String result = null;
+		if (dataSplite[0].length() == 4) {
+			StringBuilder dataBuild = new StringBuilder();
+			for (int i = dataSplite.length - 1; i >= 0; i--) {
+				dataBuild.append(dataSplite[i]);
+				dataBuild.append("/");
+			}
+			result = dataBuild.toString();
+			result = result.substring(0, result.length() - 1);
+		} else {
+			result = data.replace("-", "/");
+		}
+
+		return result;
 	}
 
 	public static String formataDataAtual() {

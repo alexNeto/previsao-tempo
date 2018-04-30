@@ -17,5 +17,4 @@ public class DataBaseConnection {
 		}
 		return conn;
 	}
-
 }
