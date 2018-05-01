@@ -1,5 +1,6 @@
 package com.ts.previsao.tempo.cidade;
 
+import static com.ts.previsao.tempo.utils.CommonsUtils.*;
 import static com.ts.previsao.tempo.utils.CommonsUtils.padronizaNomeDeCidade;
 import static com.ts.previsao.tempo.utils.CommonsUtils.removeXMLMetaData;
 
@@ -62,8 +63,10 @@ public class CidadeModel {
 		CidadeDAO cidadeDao = new CidadeDAO();
 		if (cidadeRepository == null) {
 			cidadeRepository = converteParaCidadeRepository(buscaCidade(uf, nome));
+			cidadeRepository.setAtualizacao(formataDataAtual());
 			cidadeDao.insertCidade(cidadeRepository);
 		} else {
+			cidadeRepository.setAtualizacao(formataDataAtual());
 			cidadeDao.atualizaCidade(cidadeRepository);
 		}
 		return cidadeRepository;
@@ -74,7 +77,7 @@ public class CidadeModel {
 		CidadeRepository cidadeEncontrada = null;
 		List<CidadeRepository> cidades = cidadeDao.selectAllCidade();
 		for (CidadeRepository cidade : cidades) {
-			if (cidade.getUf().equals(uf) && cidade.getNome().equals(nome)) {
+			if (cidade.getUf().equalsIgnoreCase(uf) && padronizaNomeDeCidade(cidade.getNome()).equalsIgnoreCase(nome)) {
 				cidadeEncontrada = cidade;
 			}
 		}
