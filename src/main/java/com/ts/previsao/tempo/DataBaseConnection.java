@@ -8,12 +8,12 @@ public class DataBaseConnection {
 	
 	protected static final String URL = "jdbc:sqlite:bdprevisao.db";
 
-	public Connection conecta() {
+	public Connection conecta() throws Exception{
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL);
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			throw new Exception();
 		}
 		return conn;
 	}

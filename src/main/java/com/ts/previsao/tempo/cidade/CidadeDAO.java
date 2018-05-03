@@ -33,7 +33,7 @@ public class CidadeDAO extends DataBaseConnection {
 		return true;
 	}
 
-	public boolean insertCidade(CidadeRepository cidade) throws SQLException {
+	public boolean insertCidade(CidadeRepository cidade) {
 		String sql = "insert or ignore into tbcidade(id, nome, uf, atualizacao) values(?, ?, ?, ?)";
 		try (Connection conn = this.conecta(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setInt(1, cidade.getId());
@@ -41,13 +41,13 @@ public class CidadeDAO extends DataBaseConnection {
 			stmt.setString(3, cidade.getUf());
 			stmt.setString(4, cidade.getAtualizacao());
 			stmt.executeUpdate();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			return false;
 		}
 		return true;
 	}
 
-	public List<CidadeRepository> selectAllCidade() throws SQLException {
+	public List<CidadeRepository> selectAllCidade() {
 		String sql = "select * from tbcidade";
 		List<CidadeRepository> cidades = new ArrayList<>();
 		try (Connection conn = this.conecta();
@@ -62,13 +62,13 @@ public class CidadeDAO extends DataBaseConnection {
 				cidade.setAtualizacao(rs.getString("atualizacao"));
 				cidades.add(cidade);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			return null;
 		}
 		return cidades;
 	}
 
-	public boolean atualizaCidade(CidadeRepository cidade) throws SQLException {
+	public boolean atualizaCidade(CidadeRepository cidade) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		sqlBuilder.append("UPDATE ").append("tbcidade ").append("set ");
 		sqlBuilder.append("nome = ?").append(",");
@@ -81,7 +81,7 @@ public class CidadeDAO extends DataBaseConnection {
 			stmt.setString(3, cidade.getAtualizacao());
 			stmt.setInt(4, cidade.getId());
 			stmt.executeUpdate();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			return false;
 		}
 		return true;
