@@ -46,7 +46,7 @@ public class PrevisaoDAO extends DataBaseConnection {
 			stmt.setDouble(5, previsao.getMaxima());
 			stmt.setDouble(6, previsao.getIuv());
 			stmt.executeUpdate();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			return false;
 		}
 		return true;
@@ -70,7 +70,7 @@ public class PrevisaoDAO extends DataBaseConnection {
 				previsao.setTempo(rs.getString("tempo"));
 				previsoes.add(previsao);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			return null;
 		}
 		return previsoes;
@@ -81,7 +81,7 @@ public class PrevisaoDAO extends DataBaseConnection {
 		sqlBuilder.append("delete from tbprevisao where id=").append(id);
 		try (Connection conn = this.conecta(); PreparedStatement stmt = conn.prepareStatement(sqlBuilder.toString())) {
 			stmt.executeUpdate();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			return false;
 		}
 		return true;
