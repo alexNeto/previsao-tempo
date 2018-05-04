@@ -23,7 +23,7 @@ public class CidadeModelTest {
 	
 	@Test(expected = Exception.class)
 	public void testa_se_xml_lanca_exception() throws Exception {
-		this.cidadeModel.getXMLCidade("-1");
+		this.cidadeModel.getXMLCidade(null);
 	}
 
 	@Test

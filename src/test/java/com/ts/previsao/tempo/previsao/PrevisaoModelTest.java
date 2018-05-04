@@ -24,11 +24,6 @@ public class PrevisaoModelTest {
 		assertTrue(this.previsaoModel.getXMLPrevisao(0000).contains("<previsao>"));
 	}
 
-	@Test(expected = Exception.class)
-	public void testa_se_lanca_xml_lanca_exception() throws Exception {
-		this.previsaoModel.getXMLPrevisao(-1);
-	}
-
 	@Test
 	public void testa_se_converte_xml_para_objeto() throws Exception {
 		List<Previsao> previsoes = this.previsaoModel.xmlToObjectPrevisao(this.previsaoModel.getXMLPrevisao(4963));
