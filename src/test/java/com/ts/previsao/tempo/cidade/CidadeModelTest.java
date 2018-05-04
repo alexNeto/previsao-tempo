@@ -1,6 +1,5 @@
 package com.ts.previsao.tempo.cidade;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -24,7 +23,7 @@ public class CidadeModelTest {
 	
 	@Test(expected = Exception.class)
 	public void testa_se_xml_lanca_exception() throws Exception {
-		this.cidadeModel.getXMLCidade("sao paulo");
+		this.cidadeModel.getXMLCidade("-1");
 	}
 
 	@Test
@@ -41,12 +40,12 @@ public class CidadeModelTest {
 
 	@Test
 	public void testa_se_pega_cidade() throws Exception {
-		this.cidadeModel.getCidadeSalva("sp", "sao paulo");
+		assertTrue(this.cidadeModel.getCidadeSalva("sp", "sao paulo") != null);
 	}
 
 	@Test
 	public void testa_se_filtra_cidade() throws Exception {
-		assertFalse(this.cidadeModel.filtraCidade("sp", "sao paulo") != null);
+		assertTrue(this.cidadeModel.filtraCidade("sp", "sao paulo") != null);
 	}
 
 	
